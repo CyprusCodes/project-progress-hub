@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import ImageGallery from "@/components/ImageGallery";
 import MonthlyProgressItem from "@/components/MonthlyProgressItem";
 import { getProjectBySlug } from "@/data/projects";
+import noyanlarLogo from "@/assets/noyanlar-logo.png";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -217,11 +218,12 @@ const ProjectDetail = () => {
       <footer className="bg-foreground py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-primary-foreground">Noyanlar</span>
+            <div className="bg-primary-foreground rounded-lg p-2">
+              <img 
+                src={noyanlarLogo} 
+                alt="Noyanlar Group of Companies" 
+                className="h-8 w-auto"
+              />
             </div>
             
             <p className="text-sm text-primary-foreground/60">
