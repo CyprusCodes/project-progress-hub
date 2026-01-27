@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Building2, Phone, Mail } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
+import noyanlarLogo from "@/assets/noyanlar-logo.png";
 
 const Header = () => {
   return (
@@ -19,21 +20,12 @@ const Header = () => {
         
         {/* Main header */}
         <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
-                <Building2 className="w-7 h-7 text-primary-foreground" />
-              </div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-primary to-primary/50 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity -z-10" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-foreground tracking-tight">
-                Noyanlar
-              </span>
-              <span className="text-xs text-muted-foreground font-medium uppercase tracking-widest">
-                Group of Companies
-              </span>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img 
+              src={noyanlarLogo} 
+              alt="Noyanlar Group of Companies" 
+              className="h-10 md:h-12 w-auto"
+            />
           </Link>
           
           <nav className="hidden md:flex items-center gap-8">
