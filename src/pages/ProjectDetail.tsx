@@ -183,25 +183,8 @@ const ProjectDetail = () => {
             ))}
           </div>
         </section>
-
-        {/* CTA */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-br from-foreground to-foreground/90 rounded-3xl p-8 md:p-12 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-4">
-              Bu Projede Yatırım Yapmak İster Misiniz?
-            </h2>
-            <p className="text-primary-foreground/70 max-w-2xl mx-auto mb-8">
-              Size özel fiyatlar ve ödeme planları için hemen bizimle iletişime geçin.
-            </p>
-            <a 
-              href="mailto:info@noyanlar.com" 
-              className="inline-flex px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg"
-            >
-              Bilgi Talep Et
-            </a>
-          </div>
-        </section>
       </main>
+
 
       <Footer />
     </div>
