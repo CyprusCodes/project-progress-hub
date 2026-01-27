@@ -1,0 +1,5 @@
+/*
+  Netlify _redirects file to handle client-side routing for SPAs (e.g., React, Vite, etc.)
+  This rule ensures all requests are served index.html, preventing 404s on page refresh.
+*/
+/*    /index.html   200
