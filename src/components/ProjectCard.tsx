@@ -1,54 +1,80 @@
 import { Link } from "react-router-dom";
+import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
 import { Project } from "@/data/projects";
 
 interface ProjectCardProps {
   project: Project;
+  index: number;
 }
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ProjectCard = ({ project, index }: ProjectCardProps) => {
+  const isEven = index % 2 === 0;
+
   return (
     <Link 
       to={`/project/${project.slug}`} 
-      className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+      className="group block"
     >
-      <div className="relative flex h-48 md:h-56 lg:h-64">
-        {/* Logo Section */}
-        <div 
-          className="w-1/4 flex items-center justify-center p-4"
-          style={{ backgroundColor: 'hsl(0 0% 92%)' }}
-        >
-          <div className="text-center">
-            <div 
-              className="w-16 h-16 md:w-20 md:h-20 rounded-full mx-auto mb-2 flex items-center justify-center"
-              style={{ backgroundColor: project.color }}
-            >
-              <span className="text-2xl md:text-3xl font-bold text-primary-foreground">
-                {project.name.charAt(0)}
-              </span>
-            </div>
-            <span className="text-xs md:text-sm font-medium text-foreground block leading-tight">
-              {project.name.split(' ').slice(0, 2).join(' ')}
-            </span>
-          </div>
-        </div>
-        
-        {/* Hero Image Section */}
-        <div className="w-3/4 relative overflow-hidden">
+      <div className={`relative flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-border/50`}>
+        {/* Image Section */}
+        <div className="relative lg:w-3/5 h-72 lg:h-[400px] overflow-hidden">
           <img 
             src={project.heroImage} 
             alt={project.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           />
-          {/* Overlay with project name */}
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent" />
+          
+          {/* Project badge */}
           <div 
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ 
-              background: `linear-gradient(to right, ${project.color}90, ${project.color}70)` 
-            }}
+            className="absolute top-6 left-6 px-4 py-2 rounded-full text-sm font-semibold text-primary-foreground backdrop-blur-sm"
+            style={{ backgroundColor: `${project.color}` }}
           >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-foreground tracking-wide text-center px-4 drop-shadow-lg">
-              {project.name.toUpperCase()}
-            </h2>
+            {project.location}
+          </div>
+          
+          {/* Arrow indicator */}
+          <div className="absolute bottom-6 right-6 w-14 h-14 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+            <ArrowUpRight className="w-6 h-6 text-primary-foreground group-hover:rotate-45 transition-transform duration-300" />
+          </div>
+        </div>
+        
+        {/* Content Section */}
+        <div className="lg:w-2/5 p-8 lg:p-10 flex flex-col justify-center">
+          {/* Logo circle */}
+          <div 
+            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg"
+            style={{ background: `linear-gradient(135deg, ${project.color}, ${project.color}dd)` }}
+          >
+            <span className="text-3xl font-bold text-primary-foreground">
+              {project.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+            </span>
+          </div>
+          
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+            {project.name}
+          </h2>
+          
+          <p className="text-muted-foreground mb-6 line-clamp-2">
+            {project.descriptionTr}
+          </p>
+          
+          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-primary" />
+              {project.location}
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-primary" />
+              {project.startDate} - {project.endDate}
+            </div>
+          </div>
+          
+          <div className="mt-6 pt-6 border-t border-border">
+            <span className="text-sm text-primary font-medium flex items-center gap-2">
+              Son Güncelleme: {project.latestUpdate}
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            </span>
           </div>
         </div>
       </div>
