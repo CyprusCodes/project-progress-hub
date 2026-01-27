@@ -1,10 +1,10 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Share2, Heart } from "lucide-react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import ImageGallery from "@/components/ImageGallery";
 import MonthlyProgressItem from "@/components/MonthlyProgressItem";
 import { getProjectBySlug } from "@/data/projects";
-import noyanlarLogo from "@/assets/noyanlar-logo.png";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -214,24 +214,7 @@ const ProjectDetail = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-foreground py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="bg-primary-foreground rounded-lg p-2">
-              <img 
-                src={noyanlarLogo} 
-                alt="Noyanlar Group of Companies" 
-                className="h-8 w-auto"
-              />
-            </div>
-            
-            <p className="text-sm text-primary-foreground/60">
-              © {new Date().getFullYear()} Noyanlar Group of Companies. Tüm hakları saklıdır.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
