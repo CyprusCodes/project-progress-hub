@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Share2, Heart } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageGallery from "@/components/ImageGallery";
@@ -47,27 +47,16 @@ const ProjectDetail = () => {
               <span>Tüm Projeler</span>
             </Link>
             
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-              <div>
-                <div 
-                  className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-primary-foreground mb-4"
-                  style={{ backgroundColor: project.color }}
-                >
-                  {project.location}
-                </div>
-                <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground">
-                  {project.name}
-                </h1>
+            <div>
+              <div 
+                className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-primary-foreground mb-4"
+                style={{ backgroundColor: project.color }}
+              >
+                {project.location}
               </div>
-              
-              <div className="flex items-center gap-3">
-                <button className="w-12 h-12 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary-foreground/30 transition-colors">
-                  <Heart className="w-5 h-5 text-primary-foreground" />
-                </button>
-                <button className="w-12 h-12 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary-foreground/30 transition-colors">
-                  <Share2 className="w-5 h-5 text-primary-foreground" />
-                </button>
-              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground">
+                {project.name}
+              </h1>
             </div>
           </div>
         </div>
