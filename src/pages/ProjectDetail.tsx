@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ImageGallery from "@/components/ImageGallery";
+import ImageSlider from "@/components/ImageSlider";
 import MonthlyProgressItem from "@/components/MonthlyProgressItem";
 import { getProjectBySlug } from "@/data/projects";
 
@@ -126,7 +126,7 @@ const ProjectDetail = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
             Güncel Fotoğraflar
           </h2>
-          <ImageGallery images={project.gallery} />
+          <ImageSlider images={project.gallery} />
         </section>
 
         {/* About Section */}
