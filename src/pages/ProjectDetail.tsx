@@ -1,14 +1,40 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2 } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageSlider from "@/components/ImageSlider";
 import MonthlyProgressItem from "@/components/MonthlyProgressItem";
-import { getProjectBySlug } from "@/data/projects";
+import { Project } from "@/data/projects";
+import { fetchProjectBySlug } from "@/lib/api";
+import { useEffect, useState } from "react";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const project = getProjectBySlug(slug || "");
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProject = async () => {
+      if (!slug) return;
+      try {
+        const data = await fetchProjectBySlug(slug);
+        setProject(data);
+      } catch (error) {
+        console.error("Error loading project:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProject();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -27,28 +53,28 @@ const ProjectDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
-        <img 
-          src={project.heroImage} 
+        <img
+          src={project.heroImage}
           alt={project.name}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/50 to-transparent" />
-        
+
         <div className="absolute inset-0 flex items-end">
           <div className="container mx-auto px-4 pb-12">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Tüm Projeler</span>
             </Link>
-            
+
             <div>
-              <div 
+              <div
                 className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-primary-foreground mb-4"
                 style={{ backgroundColor: project.color }}
               >
@@ -76,7 +102,7 @@ const ProjectDetail = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-card rounded-2xl p-6 shadow-lg border border-border/50">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -88,7 +114,7 @@ const ProjectDetail = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-card rounded-2xl p-6 shadow-lg border border-border/50">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -121,6 +147,27 @@ const ProjectDetail = () => {
           </div>
         </div>
 
+        {/* Blocks and Delivery Dates */}
+        {
+          project.blocks && project.blocks.length > 0 && (
+            <section className="mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+                Blok Teslim Tarihleri
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {project.blocks.map((block, idx) => (
+                  <div key={idx} className="bg-card rounded-xl p-4 shadow-sm border border-border/50 flex justify-between items-center hover:shadow-md transition-shadow">
+                    <span className="font-medium text-lg">{block.block_name}</span>
+                    <span className="text-primary font-semibold bg-primary/10 px-3 py-1.5 rounded-full text-sm">
+                      {block.estimated_delivery_date}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
         {/* Gallery Section */}
         <section className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
@@ -135,20 +182,9 @@ const ProjectDetail = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
               Proje Hakkında
             </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-3">Türkçe</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.descriptionTr}
-                </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-3">English</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-            </div>
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+              {project.description}
+            </p>
             <div className="mt-8 pt-8 border-t border-border">
               <p className="text-muted-foreground">
                 Daha fazla bilgi için{" "}
@@ -168,26 +204,26 @@ const ProjectDetail = () => {
               İnşaat İlerleme Geçmişi
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Projenin başlangıcından bu yana tüm aylık güncellemeleri görüntüleyin. 
+              Projenin başlangıcından bu yana tüm aylık güncellemeleri görüntüleyin.
               Her ay için detaylı fotoğraf galerisi mevcuttur.
             </p>
           </div>
-          
+
           <div className="max-w-4xl mx-auto">
             {project.monthlyProgress.map((progress, index) => (
-              <MonthlyProgressItem 
-                key={`${progress.month}-${progress.year}-${index}`} 
+              <MonthlyProgressItem
+                key={`${progress.month}-${progress.year}-${index}`}
                 progress={progress}
                 index={index}
               />
             ))}
           </div>
         </section>
-      </main>
+      </main >
 
 
       <Footer />
-    </div>
+    </div >
   );
 };
 

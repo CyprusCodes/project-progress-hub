@@ -192,6 +192,11 @@ export interface MonthlyProgress {
   images: string[];
 }
 
+export interface Block {
+  block_name: string;
+  estimated_delivery_date: string;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -206,6 +211,7 @@ export interface Project {
   latestUpdate: string;
   gallery: string[];
   monthlyProgress: MonthlyProgress[];
+  blocks?: Block[];
 }
 
 // Ocean Life image URLs organized by month (using high-res versions)

@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
-import { projects } from "@/data/projects";
-import { Building2, Award, Users, TrendingUp } from "lucide-react";
+import { Project } from "@/data/projects";
+import { fetchProjects } from "@/lib/api";
+import { Building2, Award, Users, TrendingUp, Loader2 } from "lucide-react";
 
 const stats = [
   { icon: Building2, value: "15+", label: "Tamamlanan Proje" },
@@ -12,42 +14,62 @@ const stats = [
 ];
 
 const Index = () => {
+  const [projectsData, setProjectsData] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const data = await fetchProjects();
+        // If API returns empty (e.g. invalid config or no data), we might want to fallback or show empty state.
+        // For now, assuming if API fails/empty we just show empty.
+        if (data && data.length > 0) {
+          setProjectsData(data);
+        }
+      } catch (error) {
+        console.error("Error loading projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProjects();
+  }, []);
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Canlı İnşaat Takibi
             </div>
-            
+
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
               İnşaat İlerlemelerinizi
               <span className="text-primary block">Takip Edin</span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-              Noyanlar Group of Companies olarak projelerimizin her aşamasını şeffaf bir şekilde paylaşıyoruz. 
+              Noyanlar Group of Companies olarak projelerimizin her aşamasını şeffaf bir şekilde paylaşıyoruz.
               Yatırımınızın gelişimini aylık güncellemelerle takip edin.
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-4">
-              <a 
-                href="#projects" 
+              <a
+                href="#projects"
                 className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5"
               >
                 Projeleri İncele
               </a>
-              <a 
-                href="mailto:info@noyanlar.com" 
+              <a
+                href="mailto:info@noyanlar.com"
                 className="px-8 py-4 bg-secondary text-secondary-foreground rounded-full font-medium hover:bg-secondary/80 transition-all"
               >
                 Bize Ulaşın
@@ -86,10 +108,17 @@ const Index = () => {
             </p>
           </div>
 
+
           <div className="space-y-8 max-w-6xl mx-auto">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
+            {loading ? (
+              <div className="flex justify-center items-center py-20">
+                <Loader2 className="w-10 h-10 animate-spin text-primary" />
+              </div>
+            ) : (
+              projectsData.map((project, index) => (
+                <ProjectCard key={project.id} project={project} index={index} />
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -103,8 +132,8 @@ const Index = () => {
           <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
             Projelerimiz hakkında detaylı bilgi almak ve size özel fırsatlardan haberdar olmak için bizimle iletişime geçin.
           </p>
-          <a 
-            href="mailto:info@noyanlar.com" 
+          <a
+            href="mailto:info@noyanlar.com"
             className="inline-flex px-8 py-4 bg-primary-foreground text-primary rounded-full font-medium hover:bg-primary-foreground/90 transition-all shadow-xl"
           >
             Ücretsiz Danışmanlık Alın
