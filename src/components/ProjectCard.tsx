@@ -43,12 +43,16 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         <div className="lg:w-2/5 p-8 lg:p-10 flex flex-col justify-center">
           {/* Logo circle */}
           <div
-            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg"
+            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg overflow-hidden relative"
             style={{ background: `linear-gradient(135deg, ${project.color}, ${project.color}dd)` }}
           >
-            <span className="text-3xl font-bold text-primary-foreground">
-              {project.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
-            </span>
+            {project.icon ? (
+              <img src={project.icon} alt={`${project.name} icon`} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-3xl font-bold text-primary-foreground">
+                {project.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+              </span>
+            )}
           </div>
 
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">

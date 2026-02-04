@@ -205,6 +205,7 @@ export interface Project {
   startDate: string;
   endDate: string;
   heroImage: string;
+  icon?: string;
   description: string;
   descriptionTr: string;
   color: string;
