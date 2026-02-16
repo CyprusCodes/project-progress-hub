@@ -1,4 +1,4 @@
-export const fetchProjects = async () => {
+export const fetchLogGroups = async () => {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const TOKEN = import.meta.env.VITE_PROJECT_PROGRESS_TOKEN;
     const ORG_ID = import.meta.env.VITE_ORGANIZATION_ID;
@@ -9,7 +9,7 @@ export const fetchProjects = async () => {
     }
 
     try {
-        const response = await fetch(`${API_URL}/public/projects?organizationId=${ORG_ID}`, {
+        const response = await fetch(`${API_URL}/public/log-groups?organizationId=${ORG_ID}`, {
             headers: {
                 "X-Project-Progress-Token": TOKEN,
                 "Content-Type": "application/json",
@@ -21,14 +21,14 @@ export const fetchProjects = async () => {
         }
 
         const data = await response.json();
-        return data.projects || [];
+        return data.logGroups || [];
     } catch (error) {
-        console.error("Failed to fetch projects:", error);
+        console.error("Failed to fetch log groups:", error);
         return [];
     }
 };
 
-export const fetchProjectBySlug = async (slug: string) => {
+export const fetchLogGroupBySlug = async (slug: string) => {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const TOKEN = import.meta.env.VITE_PROJECT_PROGRESS_TOKEN;
     const ORG_ID = import.meta.env.VITE_ORGANIZATION_ID;
@@ -39,7 +39,7 @@ export const fetchProjectBySlug = async (slug: string) => {
     }
 
     try {
-        const response = await fetch(`${API_URL}/public/projects/${slug}?organizationId=${ORG_ID}`, {
+        const response = await fetch(`${API_URL}/public/log-groups/${slug}?organizationId=${ORG_ID}`, {
             headers: {
                 "X-Project-Progress-Token": TOKEN,
                 "Content-Type": "application/json",
@@ -51,9 +51,13 @@ export const fetchProjectBySlug = async (slug: string) => {
         }
 
         const data = await response.json();
-        return data.project || null;
+        return data.logGroup || null;
     } catch (error) {
-        console.error("Failed to fetch project:", error);
+        console.error("Failed to fetch log group:", error);
         return null;
     }
 };
+
+// Keep old names as aliases for backwards compatibility
+export const fetchProjects = fetchLogGroups;
+export const fetchProjectBySlug = fetchLogGroupBySlug;

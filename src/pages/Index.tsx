@@ -1,39 +1,40 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ProjectCard from "@/components/ProjectCard";
-import { Project } from "@/data/projects";
-import { fetchProjects } from "@/lib/api";
+import LogGroupCard from "@/components/LogGroupCard";
+import { LogGroup } from "@/data/projects";
+import { fetchLogGroups } from "@/lib/api";
 import { Building2, Award, Users, TrendingUp, Loader2 } from "lucide-react";
-
-const stats = [
-  { icon: Building2, value: "15+", label: "Tamamlanan Proje" },
-  { icon: Users, value: "5000+", label: "Mutlu Müşteri" },
-  { icon: Award, value: "25+", label: "Yıllık Deneyim" },
-  { icon: TrendingUp, value: "3", label: "Devam Eden Proje" },
-];
+import { useLanguage } from "@/hooks/useLanguage";
 
 const Index = () => {
-  const [projectsData, setProjectsData] = useState<Project[]>([]);
+  const { t } = useLanguage();
+  const [logGroups, setLogGroups] = useState<LogGroup[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const stats = [
+    { icon: Building2, value: "15+", label: t("completedProjects") },
+    { icon: Users, value: "5000+", label: t("happyCustomers") },
+    { icon: Award, value: "25+", label: t("yearsExperience") },
+    { icon: TrendingUp, value: "3", label: t("ongoingProjects") },
+  ];
+
   useEffect(() => {
-    const loadProjects = async () => {
+    const loadLogGroups = async () => {
       try {
-        const data = await fetchProjects();
-        // If API returns empty (e.g. invalid config or no data), we might want to fallback or show empty state.
-        // For now, assuming if API fails/empty we just show empty.
+        const data = await fetchLogGroups();
         if (data && data.length > 0) {
-          setProjectsData(data);
+          setLogGroups(data);
         }
       } catch (error) {
-        console.error("Error loading projects:", error);
+        console.error("Error loading log groups:", error);
       } finally {
         setLoading(false);
       }
     };
-    loadProjects();
+    loadLogGroups();
   }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -48,17 +49,16 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              Canlı İnşaat Takibi
+              {t("liveBadge")}
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-              İnşaat İlerlemelerinizi
-              <span className="text-primary block">Takip Edin</span>
+              {t("heroTitle1")}
+              <span className="text-primary block">{t("heroTitle2")}</span>
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-              Noyanlar Group of Companies olarak projelerimizin her aşamasını şeffaf bir şekilde paylaşıyoruz.
-              Yatırımınızın gelişimini aylık güncellemelerle takip edin.
+              {t("heroDescription")}
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
@@ -66,13 +66,13 @@ const Index = () => {
                 href="#projects"
                 className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5"
               >
-                Projeleri İncele
+                {t("exploreProjects")}
               </a>
               <a
                 href="mailto:info@noyanlar.com"
                 className="px-8 py-4 bg-secondary text-secondary-foreground rounded-full font-medium hover:bg-secondary/80 transition-all"
               >
-                Bize Ulaşın
+                {t("contactUs")}
               </a>
             </div>
           </div>
@@ -96,18 +96,17 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Log Groups Section */}
       <section id="projects" className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-              Aktif Projelerimiz
+              {t("activeProjects")}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Kıbrıs'ın en prestijli lokasyonlarında hayata geçirdiğimiz projelerimizi keşfedin
+              {t("activeProjectsDesc")}
             </p>
           </div>
-
 
           <div className="space-y-8 max-w-6xl mx-auto">
             {loading ? (
@@ -115,8 +114,8 @@ const Index = () => {
                 <Loader2 className="w-10 h-10 animate-spin text-primary" />
               </div>
             ) : (
-              projectsData.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
+              logGroups.map((logGroup, index) => (
+                <LogGroupCard key={logGroup.id || logGroup.slug} logGroup={logGroup} index={index} />
               ))
             )}
           </div>
@@ -127,16 +126,16 @@ const Index = () => {
       <section className="py-20 bg-gradient-to-br from-primary to-primary/80">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Hayalinizdeki Eve Bir Adım Daha Yaklaşın
+            {t("ctaTitle")}
           </h2>
           <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-            Projelerimiz hakkında detaylı bilgi almak ve size özel fırsatlardan haberdar olmak için bizimle iletişime geçin.
+            {t("ctaDescription")}
           </p>
           <a
             href="mailto:info@noyanlar.com"
             className="inline-flex px-8 py-4 bg-primary-foreground text-primary rounded-full font-medium hover:bg-primary-foreground/90 transition-all shadow-xl"
           >
-            Ücretsiz Danışmanlık Alın
+            {t("freeCounseling")}
           </a>
         </div>
       </section>
