@@ -42,13 +42,13 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
                 <div className="lg:w-2/5 p-8 lg:p-10 flex flex-col justify-center">
                     {/* Logo circle */}
                     <div
-                        className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg overflow-hidden relative"
+                        className="w-36 h-36 rounded-2xl flex items-center justify-center mb-6 shadow-lg overflow-hidden relative"
                         style={{ background: `linear-gradient(135deg, ${logGroup.color}, ${logGroup.color}dd)` }}
                     >
                         {logGroup.iconUrl ? (
                             <img src={logGroup.iconUrl} alt={`${logGroup.name} icon`} className="w-full h-full object-cover" />
                         ) : (
-                            <span className="text-3xl font-bold text-primary-foreground">
+                            <span className="text-4xl font-bold text-primary-foreground">
                                 {logGroup.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
                             </span>
                         )}
