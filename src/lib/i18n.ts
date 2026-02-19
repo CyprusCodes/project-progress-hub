@@ -1,5 +1,41 @@
 export type Language = "tr" | "en";
 
+const turkishToEnglishMonths: Record<string, string> = {
+    Ocak: "January",
+    Şubat: "February",
+    Mart: "March",
+    Nisan: "April",
+    Mayıs: "May",
+    Haziran: "June",
+    Temmuz: "July",
+    Ağustos: "August",
+    Eylül: "September",
+    Ekim: "October",
+    Kasım: "November",
+    Aralık: "December",
+};
+
+const englishToTurkishMonths: Record<string, string> = Object.fromEntries(
+    Object.entries(turkishToEnglishMonths).map(([tr, en]) => [en, tr])
+);
+
+export function translateMonth(month: string, targetLang: Language): string {
+    if (targetLang === "en") {
+        return turkishToEnglishMonths[month] ?? month;
+    }
+    return englishToTurkishMonths[month] ?? month;
+}
+
+export function translateDateString(dateStr: string, targetLang: Language): string {
+    if (!dateStr) return dateStr;
+    const months = targetLang === "en" ? turkishToEnglishMonths : englishToTurkishMonths;
+    let result = dateStr;
+    for (const [from, to] of Object.entries(months)) {
+        result = result.replace(new RegExp(`\\b${from}\\b`, "gi"), to);
+    }
+    return result;
+}
+
 export const translations = {
     tr: {
         // Header
@@ -59,6 +95,8 @@ export const translations = {
         associatedProjects: "İlişkili Projeler",
         viewLocation: "Konumu Görüntüle",
         viewOnMap: "Haritada Görüntüle",
+        photos: "fotoğraf",
+        clickHere: "Tıklayın",
     },
     en: {
         // Header
@@ -118,6 +156,8 @@ export const translations = {
         associatedProjects: "Associated Projects",
         viewLocation: "View Location",
         viewOnMap: "View on Map",
+        photos: "photos",
+        clickHere: "Click Here",
     },
 };
 

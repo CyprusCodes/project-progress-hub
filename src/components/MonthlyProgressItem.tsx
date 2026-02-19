@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ChevronDown, Images, Calendar } from "lucide-react";
 import { MonthlyProgress } from "@/data/projects";
+import { useLanguage } from "@/hooks/useLanguage";
+import { translateMonth } from "@/lib/i18n";
 import ImageGallery from "./ImageGallery";
 
 interface MonthlyProgressItemProps {
@@ -10,6 +12,8 @@ interface MonthlyProgressItemProps {
 
 const MonthlyProgressItem = ({ progress, index }: MonthlyProgressItemProps) => {
   const [isExpanded, setIsExpanded] = useState(index === 0);
+  const { language, t } = useLanguage();
+  const translatedMonth = translateMonth(progress.month, language);
 
   return (
     <div className="relative">
@@ -30,7 +34,7 @@ const MonthlyProgressItem = ({ progress, index }: MonthlyProgressItemProps) => {
             <div className="relative h-48 md:h-64">
               <img 
                 src={progress.coverImage} 
-                alt={`${progress.month} ${progress.year}`}
+                alt={`${translatedMonth} ${progress.year}`}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
@@ -43,11 +47,11 @@ const MonthlyProgressItem = ({ progress, index }: MonthlyProgressItemProps) => {
                     <span className="text-sm font-medium">{progress.year}</span>
                   </div>
                   <h3 className="text-3xl md:text-4xl font-bold text-primary-foreground">
-                    {progress.month}
+                    {translatedMonth}
                   </h3>
                   <div className="flex items-center gap-2 mt-3 text-primary-foreground/80">
                     <Images className="w-4 h-4" />
-                    <span className="text-sm">{progress.images.length} fotoğraf</span>
+                    <span className="text-sm">{progress.images.length} {t("photos")}</span>
                   </div>
                 </div>
                 

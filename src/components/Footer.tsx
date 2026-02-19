@@ -10,11 +10,11 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
             <a
-              href="tel:+905338888888"
+              href="tel:+903924446060"
               className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
             >
               <Phone className="w-4 h-4" />
-              +90 533 888 88 88
+              +90 392 444 60 60
             </a>
             <a
               href="mailto:info@noyanlar.com"

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
 import { LogGroup } from "@/data/projects";
 import { useLanguage } from "@/hooks/useLanguage";
+import { translateDateString } from "@/lib/i18n";
 
 interface LogGroupCardProps {
     logGroup: LogGroup;
@@ -30,16 +31,6 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent" />
-
-                    {/* Location badge */}
-                    {logGroup.location && (
-                        <div
-                            className="absolute top-6 left-6 px-4 py-2 rounded-full text-sm font-semibold text-primary-foreground backdrop-blur-sm"
-                            style={{ backgroundColor: `${logGroup.color}` }}
-                        >
-                            {logGroup.location}
-                        </div>
-                    )}
 
                     {/* Arrow indicator */}
                     <div className="absolute bottom-6 right-6 w-14 h-14 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
@@ -75,15 +66,21 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
 
                     <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                         {logGroup.location && (
-                            <div className="flex items-center gap-2">
-                                <MapPin className="w-4 h-4 text-primary" />
-                                {logGroup.location}
-                            </div>
+                            <a
+                                href={logGroup.location}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-primary hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <MapPin className="w-4 h-4" />
+                                {t("clickHere")}
+                            </a>
                         )}
                         {logGroup.startDate && (
                             <div className="flex items-center gap-2">
                                 <Calendar className="w-4 h-4 text-primary" />
-                                {logGroup.startDate}
+                                {translateDateString(logGroup.startDate, language)}
                             </div>
                         )}
                     </div>
@@ -91,7 +88,7 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
                     {logGroup.latestUpdate && (
                         <div className="mt-6 pt-6 border-t border-border">
                             <span className="text-sm text-primary font-medium flex items-center gap-2">
-                                {t("lastUpdate")}: {logGroup.latestUpdate}
+                                {t("lastUpdate")}: {translateDateString(logGroup.latestUpdate, language)}
                                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                             </span>
                         </div>

@@ -6,6 +6,7 @@ import ImageSlider from "@/components/ImageSlider";
 import MonthlyProgressItem from "@/components/MonthlyProgressItem";
 import { LogGroup } from "@/data/projects";
 import { fetchLogGroupBySlug } from "@/lib/api";
+import { translateDateString } from "@/lib/i18n";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 
@@ -131,7 +132,7 @@ const LogGroupDetail = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">{t("startDate")}</p>
-                                    <p className="font-semibold text-foreground">{logGroup.startDate}</p>
+                                    <p className="font-semibold text-foreground">{translateDateString(logGroup.startDate!, language)}</p>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +146,7 @@ const LogGroupDetail = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">{t("estimatedEnd")}</p>
-                                    <p className="font-semibold text-foreground">{logGroup.finishDate}</p>
+                                    <p className="font-semibold text-foreground">{translateDateString(logGroup.finishDate!, language)}</p>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +165,7 @@ const LogGroupDetail = () => {
                                     {t("liveUpdate")}
                                 </div>
                                 <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground">
-                                    {t("lastUpdateLabel")}: {logGroup.latestUpdate}
+                                    {t("lastUpdateLabel")}: {translateDateString(logGroup.latestUpdate, language)}
                                 </h2>
                             </div>
                             <div className="flex items-center gap-2 text-primary-foreground/80">

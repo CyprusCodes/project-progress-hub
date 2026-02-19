@@ -13,10 +13,10 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
 
   const stats = [
-    { icon: Building2, value: "15+", label: t("completedProjects") },
-    { icon: Users, value: "5000+", label: t("happyCustomers") },
-    { icon: Award, value: "25+", label: t("yearsExperience") },
-    { icon: TrendingUp, value: "3", label: t("ongoingProjects") },
+    { icon: Building2, value: "28+", label: t("completedProjects") },
+    { icon: Users, value: "10,000+", label: t("happyCustomers") },
+    { icon: Award, value: "53", label: t("yearsExperience") },
+    { icon: TrendingUp, value: "15", label: t("ongoingProjects") },
   ];
 
   useEffect(() => {
