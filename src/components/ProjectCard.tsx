@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
 import { Project } from "@/data/projects";
+import { getOptimizedImageUrl } from "@/lib/imageUtils";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,15 +12,14 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
   const isEven = index % 2 === 0;
 
   return (
-    <Link
-      to={`/project/${project.slug}`}
-      className="group block"
-    >
-      <div className={`relative flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-border/50`}>
+    <Link to={`/project/${project.slug}`} className="group block">
+      <div
+        className={`relative flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-border/50`}
+      >
         {/* Image Section */}
         <div className="relative lg:w-3/5 h-72 lg:h-[400px] overflow-hidden">
           <img
-            src={project.heroImage}
+            src={getOptimizedImageUrl(project.heroImage, "card")}
             alt={project.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           />
@@ -44,13 +44,23 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           {/* Logo circle */}
           <div
             className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg overflow-hidden relative"
-            style={{ background: `linear-gradient(135deg, ${project.color}, ${project.color}dd)` }}
+            style={{
+              background: `linear-gradient(135deg, ${project.color}, ${project.color}dd)`,
+            }}
           >
-            {project.icon ? (
-              <img src={project.icon} alt={`${project.name} icon`} className="w-full h-full object-cover" />
+            {project.iconUrl ? (
+              <img
+                src={getOptimizedImageUrl(project.iconUrl, "icon")}
+                alt={`${project.name} icon`}
+                className="w-full h-full object-cover"
+              />
             ) : (
               <span className="text-3xl font-bold text-primary-foreground">
-                {project.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                {project.name
+                  .split(" ")
+                  .map((w) => w[0])
+                  .join("")
+                  .slice(0, 2)}
               </span>
             )}
           </div>
@@ -73,7 +83,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-primary" />
-            {project.endDate}
+            {project.finishDate}
           </div>
 
           <div className="mt-6 pt-6 border-t border-border">
@@ -84,7 +94,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           </div>
         </div>
       </div>
-    </Link >
+    </Link>
   );
 };
 

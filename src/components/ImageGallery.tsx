@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
+import { getOptimizedImageUrl } from "@/lib/imageUtils";
 
 interface ImageGalleryProps {
   images: string[];
@@ -39,7 +40,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             className="relative aspect-[4/3] overflow-hidden rounded-xl group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             <img 
-              src={image} 
+              src={getOptimizedImageUrl(image, "gallery-thumbnail")} 
               alt={`Fotoğraf ${index + 1}`}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -65,7 +66,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             {/* Image */}
             {selectedIndex !== null && (
               <img 
-                src={images[selectedIndex]} 
+                src={getOptimizedImageUrl(images[selectedIndex], "gallery-lightbox")} 
                 alt={`Fotoğraf ${selectedIndex + 1}`}
                 className="w-full h-auto max-h-[85vh] object-contain"
               />
@@ -98,7 +99,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                     onClick={() => setSelectedIndex(index)}
                     className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden transition-all ${selectedIndex === index ? 'ring-2 ring-primary scale-110' : 'opacity-60 hover:opacity-100'}`}
                   >
-                    <img src={image} alt="" className="w-full h-full object-cover" />
+                    <img src={getOptimizedImageUrl(image, "gallery-thumbnail")} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

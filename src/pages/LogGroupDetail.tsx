@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Loader2 } from "lucide-react";
+import { getOptimizedImageUrl } from "@/lib/imageUtils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageSlider from "@/components/ImageSlider";
@@ -64,7 +65,7 @@ const LogGroupDetail = () => {
             {/* Hero Section */}
             <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
                 <img
-                    src={logGroup.heroImage || logGroup.bannerUrl || ""}
+                    src={getOptimizedImageUrl(logGroup.heroImage || logGroup.bannerUrl || "", "hero")}
                     alt={logGroup.name}
                     className="w-full h-full object-cover"
                 />

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
 import { LogGroup } from "@/data/projects";
 import { useLanguage } from "@/hooks/useLanguage";
+import { getOptimizedImageUrl } from "@/lib/imageUtils";
 import { translateDateString } from "@/lib/i18n";
 
 interface LogGroupCardProps {
@@ -26,7 +27,7 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
                 {/* Image Section */}
                 <div className="relative lg:w-3/5 h-72 lg:h-[400px] overflow-hidden">
                     <img
-                        src={logGroup.heroImage || logGroup.bannerUrl || ""}
+                        src={getOptimizedImageUrl(logGroup.heroImage || logGroup.bannerUrl || "", "card")}
                         alt={logGroup.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
@@ -46,7 +47,7 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
                         style={{ background: `linear-gradient(135deg, ${logGroup.color}, ${logGroup.color}dd)` }}
                     >
                         {logGroup.iconUrl ? (
-                            <img src={logGroup.iconUrl} alt={`${logGroup.name} icon`} className="w-full h-full object-cover" />
+                            <img src={getOptimizedImageUrl(logGroup.iconUrl, "icon")} alt={`${logGroup.name} icon`} className="w-full h-full object-cover" />
                         ) : (
                             <span className="text-4xl font-bold text-primary-foreground">
                                 {logGroup.name.split(' ').map(w => w[0]).join('').slice(0, 2)}

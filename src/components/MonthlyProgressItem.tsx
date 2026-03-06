@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, Images, Calendar } from "lucide-react";
 import { MonthlyProgress } from "@/data/projects";
+import { getOptimizedImageUrl } from "@/lib/imageUtils";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translateMonth } from "@/lib/i18n";
 import ImageGallery from "./ImageGallery";
@@ -33,7 +34,7 @@ const MonthlyProgressItem = ({ progress, index }: MonthlyProgressItemProps) => {
             {/* Background Image */}
             <div className="relative h-48 md:h-64">
               <img 
-                src={progress.coverImage} 
+                src={getOptimizedImageUrl(progress.coverImage, "cover")} 
                 alt={`${translatedMonth} ${progress.year}`}
                 className="w-full h-full object-cover"
               />

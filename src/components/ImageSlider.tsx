@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getOptimizedImageUrl } from "@/lib/imageUtils";
 
 interface ImageSliderProps {
   images: string[];
@@ -51,7 +52,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
             >
               <div className="aspect-[16/9] relative">
                 <img 
-                  src={image} 
+                  src={getOptimizedImageUrl(image, "gallery-slider")} 
                   alt={`Fotoğraf ${index + 1}`}
                   className="w-full h-full object-cover"
                 />
