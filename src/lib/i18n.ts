@@ -97,6 +97,9 @@ export const translations = {
         viewOnMap: "Haritada Görüntüle",
         photos: "fotoğraf",
         clickHere: "Tıklayın",
+        projectLink: "Proje Linki",
+        readMore: "Devamını Oku",
+        readLess: "Daha Az Göster",
     },
     en: {
         // Header
@@ -158,6 +161,9 @@ export const translations = {
         viewOnMap: "View on Map",
         photos: "photos",
         clickHere: "Click Here",
+        projectLink: "Project Link",
+        readMore: "Read More",
+        readLess: "Show Less",
     },
 };
 

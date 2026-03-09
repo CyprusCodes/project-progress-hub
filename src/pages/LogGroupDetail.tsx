@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Loader2 } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Loader2, ExternalLink, ChevronDown } from "lucide-react";
 import { getOptimizedImageUrl } from "@/lib/imageUtils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,6 +16,7 @@ const LogGroupDetail = () => {
     const { language, t } = useLanguage();
     const [logGroup, setLogGroup] = useState<LogGroup | null>(null);
     const [loading, setLoading] = useState(true);
+    const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
     useEffect(() => {
         const loadLogGroup = async () => {
@@ -82,17 +83,6 @@ const LogGroupDetail = () => {
                         </Link>
 
                         <div>
-                            {logGroup.location && (
-                                <a
-                                    href={logGroup.location}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium text-primary-foreground mb-4 bg-primary/80 hover:bg-primary transition-colors"
-                                >
-                                    <MapPin className="w-4 h-4" />
-                                    {t("viewLocation")}
-                                </a>
-                            )}
                             <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground">
                                 {logGroup.name}
                             </h1>
@@ -105,24 +95,41 @@ const LogGroupDetail = () => {
                 {/* Info Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
                     {logGroup.location && (
-                        <div className="bg-card rounded-2xl p-6 shadow-lg border border-border/50">
+                        <a
+                            href={logGroup.location}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-card rounded-2xl p-6 shadow-lg border border-border/50 hover:shadow-xl transition-shadow block"
+                        >
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                                     <MapPin className="w-6 h-6 text-primary" />
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">{t("location")}</p>
-                                    <a
-                                        href={logGroup.location}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="font-semibold text-primary hover:underline"
-                                    >
-                                        {t("viewOnMap")}
-                                    </a>
+                                    <p className="font-semibold text-primary">{t("viewOnMap")}</p>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                    )}
+
+                    {logGroup.projectLink && (
+                        <a
+                            href={logGroup.projectLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-card rounded-2xl p-6 shadow-lg border border-border/50 hover:shadow-xl transition-shadow block"
+                        >
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                                    <ExternalLink className="w-6 h-6 text-primary" />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-muted-foreground">{t("projectLink")}</p>
+                                    <p className="font-semibold text-primary">{t("clickHere")}</p>
+                                </div>
+                            </div>
+                        </a>
                     )}
 
                     {logGroup.startDate && (
@@ -194,9 +201,25 @@ const LogGroupDetail = () => {
                             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
                                 {t("aboutProject")}
                             </h2>
-                            <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                                {description}
-                            </p>
+                            <div className="relative">
+                                <div
+                                    className={`text-muted-foreground leading-relaxed whitespace-pre-wrap text-justify overflow-hidden transition-all duration-300 ${
+                                        !descriptionExpanded ? "max-h-32 md:max-h-none" : "max-h-none"
+                                    }`}
+                                >
+                                    {description}
+                                </div>
+                                {!descriptionExpanded && (
+                                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-secondary/80 to-transparent md:hidden" />
+                                )}
+                                <button
+                                    onClick={() => setDescriptionExpanded(!descriptionExpanded)}
+                                    className="mt-3 flex items-center gap-1 text-primary font-medium text-sm md:hidden"
+                                >
+                                    {descriptionExpanded ? t("readLess") : t("readMore")}
+                                    <ChevronDown className={`w-4 h-4 transition-transform ${descriptionExpanded ? "rotate-180" : ""}`} />
+                                </button>
+                            </div>
                             <div className="mt-8 pt-8 border-t border-border">
                                 <p className="text-muted-foreground">
                                     {t("moreInfo")}{" "}

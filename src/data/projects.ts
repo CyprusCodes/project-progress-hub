@@ -19,9 +19,9 @@ export interface LogGroup {
   latestUpdate: string;
   gallery: string[];
   monthlyProgress: MonthlyProgress[];
-  // Keep legacy fields for backwards compatibility with existing hero images
   heroImage: string;
   location: string;
+  projectLink?: string | null;
 }
 
 // Re-export as Project alias for any remaining references

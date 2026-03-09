@@ -22,10 +22,20 @@ const Header = () => {
             <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
               {t("projects")}
             </Link>
-            <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            <a
+              href={language === "tr" ? "https://noyanlar.com/tr/corporate/about-us" : "https://noyanlar.com/en/corporate/about-us"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
               {t("about")}
             </a>
-            <a href="mailto:info@noyanlar.com" className="px-5 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+            <a
+              href={language === "tr" ? "https://noyanlar.com/tr/contact" : "https://noyanlar.com/en/contact"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+            >
               {t("contact")}
             </a>
 

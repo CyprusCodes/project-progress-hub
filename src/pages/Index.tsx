@@ -47,11 +47,6 @@ const Index = () => {
 
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              {t("liveBadge")}
-            </div>
-
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
               {t("heroTitle1")}
               <span className="text-primary block">{t("heroTitle2")}</span>
@@ -69,7 +64,9 @@ const Index = () => {
                 {t("exploreProjects")}
               </a>
               <a
-                href="mailto:info@noyanlar.com"
+                href="https://wa.me/905338243370"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-8 py-4 bg-secondary text-secondary-foreground rounded-full font-medium hover:bg-secondary/80 transition-all"
               >
                 {t("contactUs")}
@@ -132,7 +129,9 @@ const Index = () => {
             {t("ctaDescription")}
           </p>
           <a
-            href="mailto:info@noyanlar.com"
+            href="https://wa.me/905338243370"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex px-8 py-4 bg-primary-foreground text-primary rounded-full font-medium hover:bg-primary-foreground/90 transition-all shadow-xl"
           >
             {t("freeCounseling")}
