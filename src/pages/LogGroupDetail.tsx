@@ -210,16 +210,16 @@ const LogGroupDetail = () => {
                                     {description}
                                 </div>
                                 {!descriptionExpanded && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-secondary/80 to-transparent md:hidden" />
+                                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-secondary/80 to-transparent pointer-events-none md:hidden" />
                                 )}
-                                <button
-                                    onClick={() => setDescriptionExpanded(!descriptionExpanded)}
-                                    className="mt-3 flex items-center gap-1 text-primary font-medium text-sm md:hidden"
-                                >
-                                    {descriptionExpanded ? t("readLess") : t("readMore")}
-                                    <ChevronDown className={`w-4 h-4 transition-transform ${descriptionExpanded ? "rotate-180" : ""}`} />
-                                </button>
                             </div>
+                            <button
+                                onClick={() => setDescriptionExpanded(!descriptionExpanded)}
+                                className="relative z-10 mt-3 flex items-center gap-1 text-primary font-medium text-sm md:hidden"
+                            >
+                                {descriptionExpanded ? t("readLess") : t("readMore")}
+                                <ChevronDown className={`w-4 h-4 transition-transform ${descriptionExpanded ? "rotate-180" : ""}`} />
+                            </button>
                             <div className="mt-8 pt-8 border-t border-border">
                                 <p className="text-muted-foreground">
                                     {t("moreInfo")}{" "}
