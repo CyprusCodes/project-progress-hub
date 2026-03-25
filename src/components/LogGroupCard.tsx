@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
 import { LogGroup } from "@/data/projects";
 import { useLanguage } from "@/hooks/useLanguage";
 import { getOptimizedImageUrl } from "@/lib/imageUtils";
@@ -77,12 +77,6 @@ const LogGroupCard = ({ logGroup, index }: LogGroupCardProps) => {
                                 <MapPin className="w-4 h-4" />
                                 {t("clickHere")}
                             </a>
-                        )}
-                        {logGroup.startDate && (
-                            <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-primary" />
-                                {translateDateString(logGroup.startDate, language)}
-                            </div>
                         )}
                     </div>
 

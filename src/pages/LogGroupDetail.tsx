@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, MapPin, Calendar, CalendarCheck, Building2, Loader2, ExternalLink, ChevronDown } from "lucide-react";
+import { ArrowLeft, MapPin, Building2, Loader2, ExternalLink, ChevronDown } from "lucide-react";
 import { getOptimizedImageUrl } from "@/lib/imageUtils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -132,33 +132,6 @@ const LogGroupDetail = () => {
                         </a>
                     )}
 
-                    {logGroup.startDate && (
-                        <div className="bg-card rounded-2xl p-6 shadow-lg border border-border/50">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                                    <Calendar className="w-6 h-6 text-primary" />
-                                </div>
-                                <div>
-                                    <p className="text-sm text-muted-foreground">{t("startDate")}</p>
-                                    <p className="font-semibold text-foreground">{translateDateString(logGroup.startDate!, language)}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {logGroup.finishDate && (
-                        <div className="bg-card rounded-2xl p-6 shadow-lg border border-border/50">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                                    <CalendarCheck className="w-6 h-6 text-primary" />
-                                </div>
-                                <div>
-                                    <p className="text-sm text-muted-foreground">{t("estimatedEnd")}</p>
-                                    <p className="font-semibold text-foreground">{translateDateString(logGroup.finishDate!, language)}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
                 </div>
 
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
 import { Project } from "@/data/projects";
 import { getOptimizedImageUrl } from "@/lib/imageUtils";
 
@@ -78,12 +78,6 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
               <MapPin className="w-4 h-4 text-primary" />
               {project.location}
             </div>
-            {project.startDate}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-primary" />
-            {project.finishDate}
           </div>
 
           <div className="mt-6 pt-6 border-t border-border">
